@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maestro Speed Wash & Scavenger - Services professionnels de nettoyage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS pour les couleurs professionnelles */
+        :root {
+            --primary: #2c5aa0; /* Bleu professionnel */
+            --secondary: #4CAF50; /* Vert pour l'écologie */
+            --accent: #FF9800; /* Orange pour l'express */
+            --light: #f5f5f5;
+            --dark: #333333;
+            --text: #444444;
+        }
+
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Styles pour les animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animate-left {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .animate-right {
+            animation: slideInRight 1s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Section Hero */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e68900;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Section Services */
+        .services {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            background-color: var(--primary);
+            color: white;
+            font-size: 2.5rem;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .service-content {
+            padding: 30px;
+        }
+
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* Section Prix */
+        .pricing {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .price-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 0 auto;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .price-card h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .price-details {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .price-details li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-details li:last-child {
+            border-bottom: none;
+        }
+
+        /* Section Horaires */
+        .schedule {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .schedule-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .schedule-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .schedule-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .schedule-card p {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        /* Section Services spéciaux */
+        .special-services {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .special-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .special-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .special-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .special-card.bio {
+            border-top: 5px solid var(--secondary);
+        }
+
+        .special-card.express {
+            border-top: 5px solid var(--accent);
+        }
+
+        .special-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 70px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: white;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 0;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Maestro Speed Wash & Scavenger</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#prix">Tarifs</a></li>
+                    <li><a href="#horaires">Horaires</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-fade">Services Professionnels de Nettoyage</h1>
+                <p class="animate-fade">Maestro Speed Wash & Scavenger vous offre des services de qualité pour un environnement plus propre et plus sain.</p>
+                <a href="#services" class="btn animate-fade">Découvrir nos services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+                <p>Découvrez notre gamme complète de services professionnels pour répondre à tous vos besoins de nettoyage.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card animate-left">
+                    <div class="service-icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Service d'Éboueurs</h3>
+                        <p>Ramassage et collecte d'ordures dans les ménages avec un service fiable et régulier pour maintenir la propreté de votre environnement.</p>
+                    </div>
+                </div>
+                <div class="service-card animate-fade">
+                    <div class="service-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Blanchisserie</h3>
+                        <p>Ramassage et collecte des habits pour la blanchisserie. Nous prenons soin de vos vêtements avec des techniques de nettoyage professionnelles.</p>
+                    </div>
+                </div>
+                <div class="service-card animate-right">
+                    <div class="service-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Jeudi Propre</h3>
+                        <p>Une initiative communautaire pour rendre la ville propre. Rejoignez-nous chaque jeudi pour des actions de nettoyage collectif.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Prix -->
+    <section class="pricing" id="prix">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Tarifs</h2>
+                <p>Des prix compétitifs pour des services de qualité supérieure.</p>
+            </div>
+            <div class="price-card animate-pulse">
+                <h3>Service de Blanchisserie</h3>
+                <div class="price">2000 FRS/kg</div>
+                <ul class="price-details">
+                    <li><i class="fas fa-check"></i> Lavage professionnel</li>
+                    <li><i class="fas fa-check"></i> Rinçage approfondi</li>
+                    <li><i class="fas fa-check"></i> Repassage soigné</li>
+                    <li><i class="fas fa-check"></i> Parfumage délicat</li>
+                    <li><i class="fas fa-check"></i> Emballage protecteur</li>
+                </ul>
+                <a href="#contact" class="btn">Commander maintenant</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Horaires -->
+    <section class="schedule" id="horaires">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Horaires de Travail</h2>
+                <p>Nous sommes disponibles pour vous servir selon ces horaires.</p>
+            </div>
+            <div class="schedule-container">
+                <div class="schedule-card animate-left">
+                    <h3>Service d'Éboueurs</h3>
+                    <p><strong>Lundi - Vendredi:</strong> 6h00 - 14h00</p>
+                    <p><strong>Samedi:</strong> 7h00 - 12h00</p>
+                    <p><strong>Dimanche:</strong> Fermé</p>
+                </div>
+                <div class="schedule-card animate-fade">
+                    <h3>Blanchisserie</h3>
+                    <p><strong>Lundi - Samedi:</strong> 8h00 - 18h00</p>
+                    <p><strong>Service Express:</strong> 24h/24</p>
+                    <p><strong>Dimanche:</strong> 9h00 - 13h00</p>
+                </div>
+                <div class="schedule-card animate-right">
+                    <h3>Jeudi Propre</h3>
+                    <p><strong>Jeudi:</strong> 7h00 - 12h00</p>
+                    <p>Rendez-vous mensuel pour nettoyer ensemble notre ville</p>
+                    <div class="highlight">Prochain: 15 Juin 2023</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services Spéciaux -->
+    <section class="special-services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Services Spéciaux</h2>
+                <p>Découvrez nos services additionnels pour répondre à vos besoins spécifiques.</p>
+            </div>
+            <div class="special-grid">
+                <div class="special-card bio animate-left">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Service Bio</h3>
+                    <p>Utilisation de produits écologiques et respectueux de l'environnement pour tous nos services de nettoyage.</p>
+                </div>
+                <div class="special-card express animate-right">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Service Express</h3>
+                    <p>Besoin d'un service rapide? Notre option express vous garantit un traitement prioritaire dans les plus brefs délais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Maestro Speed Wash & Scavenger</h3>
+                    <p>Votre partenaire de confiance pour tous vos besoins de nettoyage et d'entretien.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#prix">Tarifs</a></li>
+                        <li><a href="#horaires">Horaires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Nos Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Éboueurs</a></li>
+                        <li><a href="#">Blanchisserie</a></li>
+                        <li><a href="#">Jeudi Propre</a></li>
+                        <li><a href="#">Service Bio</a></li>
+                        <li><a href="#">Service Express</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Rue de la Propreté, Ville</li>
+                        <li><i class="fas fa-phone"></i> +123 456 789</li>
+                        <li><i class="fas fa-envelope"></i> contact@maestrospeed.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Maestro Speed Wash & Scavenger. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Animation au défilement
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade');
+                    }
+                });
+            }, observerOptions);
+
+            // Observer les éléments à animer
+            const elementsToAnimate = document.querySelectorAll('.service-card, .schedule-card, .special-card, .price-card');
+            elementsToAnimate.forEach(function(el) {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
