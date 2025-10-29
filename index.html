@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maestro Speed Wash & Scavenger - Services professionnels de nettoyage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* Variables CSS pour les couleurs professionnelles */
         :root {
             --primary: #2c5aa0; /* Bleu professionnel */
+            --primary-dark: #1e3d72;
             --secondary: #4CAF50; /* Vert pour l'écologie */
+            --secondary-dark: #3d8b40;
             --accent: #FF9800; /* Orange pour l'express */
-            --light: #f5f5f5;
-            --dark: #333333;
-            --text: #444444;
+            --accent-dark: #e68900;
+            --light: #f8f9fa;
+            --light-gray: #e9ecef;
+            --dark: #2d3748;
+            --text: #4a5568;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
         }
 
         /* Reset et styles de base */
@@ -21,13 +30,21 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            font-family: 'Poppins', sans-serif;
             background-color: var(--light);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
         }
 
         .container {
@@ -37,9 +54,13 @@
             padding: 0 15px;
         }
 
+        .section-padding {
+            padding: 100px 0;
+        }
+
         /* Styles pour les animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -59,30 +80,52 @@
             100% { transform: scale(1); }
         }
 
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
         .animate-fade {
-            animation: fadeIn 1s ease-out;
+            animation: fadeIn 1s ease-out forwards;
         }
 
         .animate-left {
-            animation: slideInLeft 1s ease-out;
+            animation: slideInLeft 1s ease-out forwards;
         }
 
         .animate-right {
-            animation: slideInRight 1s ease-out;
+            animation: slideInRight 1s ease-out forwards;
         }
 
         .animate-pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 3s infinite;
         }
+
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .delay-4 { animation-delay: 0.8s; opacity: 0; }
 
         /* Header et Navigation */
         header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: var(--white);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 5px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
         }
 
         .navbar {
@@ -90,20 +133,42 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            transition: all 0.3s ease;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
 
-        .logo i {
-            margin-right: 10px;
-            font-size: 2rem;
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(44, 90, 160, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .logo-subtext {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+            letter-spacing: 1px;
         }
 
         .nav-links {
@@ -113,6 +178,7 @@
 
         .nav-links li {
             margin-left: 30px;
+            position: relative;
         }
 
         .nav-links a {
@@ -120,67 +186,134 @@
             color: var(--dark);
             font-weight: 500;
             transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--primary);
         }
 
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(44, 90, 160, 0.4);
+        }
+
         .hamburger {
             display: none;
             cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary);
         }
 
         /* Section Hero */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(30, 61, 114, 0.85), rgba(44, 90, 160, 0.9)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
             color: white;
             height: 100vh;
             display: flex;
             align-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23f8f9fa"></path></svg>');
+            background-size: cover;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-out;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .hero p {
             font-size: 1.2rem;
-            margin-bottom: 30px;
-            animation: fadeIn 2s ease-out;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
         }
 
         .btn {
             display: inline-block;
-            background-color: var(--accent);
+            background: var(--gradient-accent);
             color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 15px 35px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            font-size: 1rem;
         }
 
         .btn:hover {
-            background-color: #e68900;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            box-shadow: none;
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
         }
 
         /* Section Services */
         .services {
-            padding: 100px 0;
-            background-color: white;
+            background-color: var(--light);
+            position: relative;
         }
 
         .section-title {
@@ -192,12 +325,27 @@
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background: var(--gradient-primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
 
         .section-title p {
             max-width: 600px;
             margin: 0 auto;
             color: var(--text);
+            font-size: 1.1rem;
         }
 
         .services-grid {
@@ -207,28 +355,57 @@
         }
 
         .service-card {
-            background-color: var(--light);
-            border-radius: 10px;
+            background-color: var(--white);
+            border-radius: 15px;
             overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+            z-index: 2;
+        }
+
+        .service-card:nth-child(2)::before {
+            background: var(--gradient-secondary);
+        }
+
+        .service-card:nth-child(3)::before {
+            background: var(--gradient-accent);
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         .service-icon {
-            background-color: var(--primary);
-            color: white;
-            font-size: 2.5rem;
-            padding: 30px;
+            padding: 40px 30px 0;
             text-align: center;
+            font-size: 3.5rem;
+            color: var(--primary);
+        }
+
+        .service-card:nth-child(2) .service-icon {
+            color: var(--secondary);
+        }
+
+        .service-card:nth-child(3) .service-icon {
+            color: var(--accent);
         }
 
         .service-content {
             padding: 30px;
+            text-align: center;
         }
 
         .service-content h3 {
@@ -239,24 +416,36 @@
 
         /* Section Prix */
         .pricing {
-            padding: 100px 0;
-            background-color: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
         }
 
         .price-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 40px;
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 50px 40px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
             margin: 0 auto;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--gradient-accent);
         }
 
         .price-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
         .price-card h3 {
@@ -266,30 +455,49 @@
         }
 
         .price {
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--accent);
-            font-weight: 700;
+            font-weight: 800;
             margin: 20px 0;
+            text-shadow: 0 2px 10px rgba(255, 152, 0, 0.2);
+        }
+
+        .price-unit {
+            font-size: 1.2rem;
+            color: var(--text);
+            font-weight: 500;
         }
 
         .price-details {
             list-style: none;
             margin-bottom: 30px;
+            text-align: left;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .price-details li {
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
         }
 
         .price-details li:last-child {
             border-bottom: none;
         }
 
+        .price-details li i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
         /* Section Horaires */
         .schedule {
-            padding: 100px 0;
-            background-color: white;
+            background-color: var(--white);
+            position: relative;
         }
 
         .schedule-container {
@@ -301,17 +509,38 @@
 
         .schedule-card {
             background-color: var(--light);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 40px 30px;
             flex: 1;
             min-width: 250px;
             text-align: center;
             transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .schedule-card:nth-child(2)::before {
+            background: var(--gradient-secondary);
+        }
+
+        .schedule-card:nth-child(3)::before {
+            background: var(--gradient-accent);
         }
 
         .schedule-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
         .schedule-card h3 {
@@ -322,21 +551,30 @@
 
         .schedule-card p {
             margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .schedule-time {
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .highlight {
-            background-color: var(--secondary);
+            background: var(--gradient-secondary);
             color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 8px 15px;
+            border-radius: 30px;
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         /* Section Services spéciaux */
         .special-services {
-            padding: 100px 0;
-            background-color: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
         }
 
         .special-grid {
@@ -346,31 +584,218 @@
         }
 
         .special-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 40px 30px;
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 50px 30px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .special-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+        }
+
+        .special-card.bio::before {
+            background: var(--gradient-secondary);
+        }
+
+        .special-card.express::before {
+            background: var(--gradient-accent);
         }
 
         .special-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        .special-card.bio {
-            border-top: 5px solid var(--secondary);
-        }
-
-        .special-card.express {
-            border-top: 5px solid var(--accent);
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         .special-card i {
-            font-size: 3rem;
-            color: var(--primary);
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: inline-block;
+        }
+
+        .special-card.bio i {
+            color: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .special-card.express i {
+            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .special-card h3 {
+            font-size: 1.8rem;
             margin-bottom: 20px;
+        }
+
+        /* Section Témoignages */
+        .testimonials {
+            background-color: var(--white);
+            position: relative;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        /* Section Contact */
+        .contact {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .contact .section-title h2 {
+            color: white;
+        }
+
+        .contact .section-title h2::after {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .contact .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            color: white;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
         }
 
         /* Footer */
@@ -392,6 +817,7 @@
             margin-bottom: 25px;
             position: relative;
             padding-bottom: 10px;
+            color: white;
         }
 
         .footer-column h3::after {
@@ -401,7 +827,7 @@
             bottom: 0;
             width: 50px;
             height: 2px;
-            background-color: var(--accent);
+            background: var(--accent);
         }
 
         .footer-links {
@@ -420,6 +846,7 @@
 
         .footer-links a:hover {
             color: white;
+            padding-left: 5px;
         }
 
         .social-links {
@@ -454,71 +881,141 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 0;
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
             }
-
+            
             .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                flex-direction: column;
-                background-color: white;
-                text-align: center;
-                transition: 0.3s;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                display: none;
             }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li {
-                margin: 0;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 15px;
-                border-bottom: 1px solid #eee;
-            }
-
+            
             .hamburger {
                 display: block;
             }
-
-            .hero h1 {
-                font-size: 2.5rem;
+            
+            .mobile-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                z-index: 999;
             }
+            
+            .mobile-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .mobile-links {
+                list-style: none;
+                text-align: center;
+            }
+            
+            .mobile-links li {
+                margin-bottom: 15px;
+            }
+            
+            .mobile-links a {
+                text-decoration: none;
+                color: var(--dark);
+                font-weight: 500;
+                font-size: 1.1rem;
+                display: block;
+                padding: 10px;
+                transition: all 0.3s;
+            }
+            
+            .mobile-links a:hover {
+                color: var(--primary);
+                background: rgba(44, 90, 160, 0.05);
+                border-radius: 5px;
+            }
+        }
 
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
             .hero p {
                 font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .price {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-padding {
+                padding: 70px 0;
+            }
+            
+            .service-card, .special-card, .testimonial-card {
+                padding: 25px 20px;
+            }
+            
+            .price-card {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <i class="fas fa-hands-helping"></i>
-                    <span>Maestro Speed Wash & Scavenger</span>
+                    <div class="logo-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <div class="logo-text">
+                        Maestro Speed <span class="logo-subtext">Wash & Scavenger</span>
+                    </div>
                 </a>
                 <ul class="nav-links">
                     <li><a href="#accueil">Accueil</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#prix">Tarifs</a></li>
                     <li><a href="#horaires">Horaires</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#special">Services Spéciaux</a></li>
+                    <li><a href="#contact" class="nav-btn">Contact</a></li>
                 </ul>
-                <div class="hamburger">
+                <div class="hamburger" id="hamburger">
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
+        </div>
+        <!-- Menu Mobile -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#prix">Tarifs</a></li>
+                <li><a href="#horaires">Horaires</a></li>
+                <li><a href="#special">Services Spéciaux</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </header>
 
@@ -527,45 +1024,48 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="animate-fade">Services Professionnels de Nettoyage</h1>
-                <p class="animate-fade">Maestro Speed Wash & Scavenger vous offre des services de qualité pour un environnement plus propre et plus sain.</p>
-                <a href="#services" class="btn animate-fade">Découvrir nos services</a>
+                <p class="animate-fade delay-1">Maestro Speed Wash & Scavenger vous offre des services de qualité pour un environnement plus propre et plus sain. Faites confiance à notre expertise pour tous vos besoins de nettoyage.</p>
+                <div class="animate-fade delay-2">
+                    <a href="#services" class="btn">Découvrir nos services</a>
+                    <a href="#contact" class="btn btn-outline">Nous contacter</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Section Services -->
-    <section class="services" id="services">
+    <section class="services section-padding" id="services">
         <div class="container">
             <div class="section-title">
                 <h2>Nos Services</h2>
                 <p>Découvrez notre gamme complète de services professionnels pour répondre à tous vos besoins de nettoyage.</p>
             </div>
             <div class="services-grid">
-                <div class="service-card animate-left">
+                <div class="service-card animate-left delay-1">
                     <div class="service-icon">
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-truck-loading"></i>
                     </div>
                     <div class="service-content">
                         <h3>Service d'Éboueurs</h3>
-                        <p>Ramassage et collecte d'ordures dans les ménages avec un service fiable et régulier pour maintenir la propreté de votre environnement.</p>
+                        <p>Ramassage et collecte d'ordures dans les ménages avec un service fiable et régulier pour maintenir la propreté de votre environnement. Nous nous engageons à respecter les horaires et à offrir un service de qualité.</p>
                     </div>
                 </div>
-                <div class="service-card animate-fade">
+                <div class="service-card animate-fade delay-2">
                     <div class="service-icon">
                         <i class="fas fa-tshirt"></i>
                     </div>
                     <div class="service-content">
                         <h3>Blanchisserie</h3>
-                        <p>Ramassage et collecte des habits pour la blanchisserie. Nous prenons soin de vos vêtements avec des techniques de nettoyage professionnelles.</p>
+                        <p>Ramassage et collecte des habits pour la blanchisserie. Nous prenons soin de vos vêtements avec des techniques de nettoyage professionnelles. Lavage, rinçage, repassage et parfumage inclus.</p>
                     </div>
                 </div>
-                <div class="service-card animate-right">
+                <div class="service-card animate-right delay-3">
                     <div class="service-icon">
-                        <i class="fas fa-city"></i>
+                        <i class="fas fa-hands-helping"></i>
                     </div>
                     <div class="service-content">
                         <h3>Jeudi Propre</h3>
-                        <p>Une initiative communautaire pour rendre la ville propre. Rejoignez-nous chaque jeudi pour des actions de nettoyage collectif.</p>
+                        <p>Une initiative communautaire pour rendre la ville propre. Rejoignez-nous chaque jeudi pour des actions de nettoyage collectif. Ensemble, nous pouvons faire la différence pour notre environnement.</p>
                     </div>
                 </div>
             </div>
@@ -573,7 +1073,7 @@
     </section>
 
     <!-- Section Prix -->
-    <section class="pricing" id="prix">
+    <section class="pricing section-padding" id="prix">
         <div class="container">
             <div class="section-title">
                 <h2>Nos Tarifs</h2>
@@ -581,13 +1081,14 @@
             </div>
             <div class="price-card animate-pulse">
                 <h3>Service de Blanchisserie</h3>
-                <div class="price">2000 FRS/kg</div>
+                <div class="price">2000 <span class="price-unit">FRS/kg</span></div>
                 <ul class="price-details">
                     <li><i class="fas fa-check"></i> Lavage professionnel</li>
                     <li><i class="fas fa-check"></i> Rinçage approfondi</li>
                     <li><i class="fas fa-check"></i> Repassage soigné</li>
                     <li><i class="fas fa-check"></i> Parfumage délicat</li>
                     <li><i class="fas fa-check"></i> Emballage protecteur</li>
+                    <li><i class="fas fa-check"></i> Service de livraison</li>
                 </ul>
                 <a href="#contact" class="btn">Commander maintenant</a>
             </div>
@@ -595,64 +1096,180 @@
     </section>
 
     <!-- Section Horaires -->
-    <section class="schedule" id="horaires">
+    <section class="schedule section-padding" id="horaires">
         <div class="container">
             <div class="section-title">
                 <h2>Nos Horaires de Travail</h2>
                 <p>Nous sommes disponibles pour vous servir selon ces horaires.</p>
             </div>
             <div class="schedule-container">
-                <div class="schedule-card animate-left">
+                <div class="schedule-card animate-left delay-1">
                     <h3>Service d'Éboueurs</h3>
-                    <p><strong>Lundi - Vendredi:</strong> 6h00 - 14h00</p>
-                    <p><strong>Samedi:</strong> 7h00 - 12h00</p>
-                    <p><strong>Dimanche:</strong> Fermé</p>
+                    <p><span class="schedule-time">Lundi - Vendredi:</span> 6h00 - 14h00</p>
+                    <p><span class="schedule-time">Samedi:</span> 7h00 - 12h00</p>
+                    <p><span class="schedule-time">Dimanche:</span> Fermé</p>
                 </div>
-                <div class="schedule-card animate-fade">
+                <div class="schedule-card animate-fade delay-2">
                     <h3>Blanchisserie</h3>
-                    <p><strong>Lundi - Samedi:</strong> 8h00 - 18h00</p>
-                    <p><strong>Service Express:</strong> 24h/24</p>
-                    <p><strong>Dimanche:</strong> 9h00 - 13h00</p>
+                    <p><span class="schedule-time">Lundi - Samedi:</span> 8h00 - 18h00</p>
+                    <p><span class="schedule-time">Service Express:</span> 24h/24</p>
+                    <p><span class="schedule-time">Dimanche:</span> 9h00 - 13h00</p>
+                    <div class="highlight">Service rapide disponible</div>
                 </div>
-                <div class="schedule-card animate-right">
+                <div class="schedule-card animate-right delay-3">
                     <h3>Jeudi Propre</h3>
-                    <p><strong>Jeudi:</strong> 7h00 - 12h00</p>
+                    <p><span class="schedule-time">Jeudi:</span> 7h00 - 12h00</p>
                     <p>Rendez-vous mensuel pour nettoyer ensemble notre ville</p>
-                    <div class="highlight">Prochain: 15 Juin 2023</div>
+                    <div class="highlight">Prochain: 15 Juin 2025</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Section Services Spéciaux -->
-    <section class="special-services">
+    <section class="special-services section-padding" id="special">
         <div class="container">
             <div class="section-title">
                 <h2>Services Spéciaux</h2>
                 <p>Découvrez nos services additionnels pour répondre à vos besoins spécifiques.</p>
             </div>
             <div class="special-grid">
-                <div class="special-card bio animate-left">
+                <div class="special-card bio animate-left delay-1">
                     <i class="fas fa-leaf"></i>
                     <h3>Service Bio</h3>
-                    <p>Utilisation de produits écologiques et respectueux de l'environnement pour tous nos services de nettoyage.</p>
+                    <p>Utilisation de produits écologiques et respectueux de l'environnement pour tous nos services de nettoyage. Nous nous engageons à préserver notre planète tout en offrant un résultat impeccable.</p>
                 </div>
-                <div class="special-card express animate-right">
+                <div class="special-card express animate-right delay-2">
                     <i class="fas fa-bolt"></i>
                     <h3>Service Express</h3>
-                    <p>Besoin d'un service rapide? Notre option express vous garantit un traitement prioritaire dans les plus brefs délais.</p>
+                    <p>Besoin d'un service rapide? Notre option express vous garantit un traitement prioritaire dans les plus brefs délais. Idéal pour les urgences et les situations qui nécessitent une intervention rapide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Témoignages -->
+    <section class="testimonials section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ce que disent nos clients</h2>
+                <p>Découvrez les expériences de nos clients satisfaits.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate-left delay-1">
+                    <div class="testimonial-text">
+                        Je suis très satisfait du service de blanchisserie. Mes vêtements sont toujours impeccables et le service est rapide. Je recommande vivement!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>Jean D.</h4>
+                            <p>Client depuis 2 ans</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-fade delay-2">
+                    <div class="testimonial-text">
+                        Le service d'éboueurs est toujours ponctuel et efficace. Ma rue est maintenant propre grâce à leur travail régulier. Merci pour votre professionnalisme!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MS</div>
+                        <div class="author-info">
+                            <h4>Marie S.</h4>
+                            <p>Habitant du quartier</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-right delay-3">
+                    <div class="testimonial-text">
+                        J'ai utilisé le service express pour un besoin urgent et j'ai été impressionné par la rapidité et la qualité du travail. Je ne vais plus ailleurs!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PK</div>
+                        <div class="author-info">
+                            <h4>Pierre K.</h4>
+                            <p>Nouveau client</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contactez-nous</h2>
+                <p>N'hésitez pas à nous contacter pour toute question ou demande de service.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item animate-left delay-1">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Adresse</h3>
+                            <p>123 Rue de la Propreté, Ville</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-left delay-2">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Téléphone</h3>
+                            <p>+123 456 789</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-left delay-3">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>contact@maestrospeed.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item animate-left delay-4">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Heures d'ouverture</h3>
+                            <p>Lun - Sam: 8h00 - 18h00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form animate-right delay-2">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Votre email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Sujet" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Votre message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Envoyer le message</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Maestro Speed Wash & Scavenger</h3>
-                    <p>Votre partenaire de confiance pour tous vos besoins de nettoyage et d'entretien.</p>
+                    <p>Votre partenaire de confiance pour tous vos besoins de nettoyage et d'entretien. Nous nous engageons à offrir des services de qualité avec un souci constant de satisfaction client.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -667,6 +1284,7 @@
                         <li><a href="#services">Services</a></li>
                         <li><a href="#prix">Tarifs</a></li>
                         <li><a href="#horaires">Horaires</a></li>
+                        <li><a href="#special">Services Spéciaux</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -680,44 +1298,78 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Contact</h3>
+                    <h3>Informations</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Rue de la Propreté, Ville</li>
-                        <li><i class="fas fa-phone"></i> +123 456 789</li>
-                        <li><i class="fas fa-envelope"></i> contact@maestrospeed.com</li>
+                        <li><a href="#">À propos de nous</a></li>
+                        <li><a href="#">Notre équipe</a></li>
+                        <li><a href="#">Carrières</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Maestro Speed Wash & Scavenger. Tous droits réservés.</p>
+                <p>&copy; 2025 Maestro Speed Wash & Scavenger. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
     <script>
         // Menu mobile
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
         });
 
         // Animation au défilement
         document.addEventListener('DOMContentLoaded', function() {
+            // Animation des éléments au défilement
             const observerOptions = {
-                threshold: 0.1
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
             };
 
             const observer = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fade');
+                        entry.target.style.animationPlayState = 'running';
                     }
                 });
             }, observerOptions);
 
             // Observer les éléments à animer
-            const elementsToAnimate = document.querySelectorAll('.service-card, .schedule-card, .special-card, .price-card');
+            const elementsToAnimate = document.querySelectorAll('.animate-fade, .animate-left, .animate-right, .animate-pulse');
             elementsToAnimate.forEach(function(el) {
+                // Définir l'état initial
+                if (el.classList.contains('animate-fade') || el.classList.contains('animate-left') || el.classList.contains('animate-right')) {
+                    el.style.opacity = '0';
+                }
+                
                 observer.observe(el);
+            });
+
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Fermer le menu mobile en cliquant sur un lien
+            const mobileLinks = document.querySelectorAll('.mobile-links a');
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    document.getElementById('mobileMenu').classList.remove('active');
+                });
+            });
+
+            // Formulaire de contact
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Merci pour votre message! Nous vous contacterons bientôt.');
+                this.reset();
             });
         });
     </script>
