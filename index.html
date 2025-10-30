@@ -34,6 +34,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--dark-bg);
@@ -94,6 +98,11 @@
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes float-bubble {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+
         .animate-fade {
             animation: fadeIn 1s ease-out forwards;
         }
@@ -119,17 +128,101 @@
         .delay-3 { animation-delay: 0.6s; opacity: 0; }
         .delay-4 { animation-delay: 0.8s; opacity: 0; }
 
-        /* Animation de fond */
+        /* Animation de fond améliorée */
         .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             background: linear-gradient(-45deg, #1a1d28, #252a38, #2d3748, #1a1d28);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
+        }
+
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -150px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float-bubble 15s infinite linear;
+        }
+
+        .bubble:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            left: 10%;
+            animation-duration: 16s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 10s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 35%;
+            animation-duration: 18s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 80px;
+            height: 80px;
+            left: 50%;
+            animation-duration: 22s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 35px;
+            height: 35px;
+            left: 65%;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 45px;
+            height: 45px;
+            left: 80%;
+            animation-duration: 17s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 25px;
+            height: 25px;
+            left: 30%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(8) {
+            width: 60px;
+            height: 60px;
+            left: 70%;
+            animation-duration: 20s;
+            animation-delay: 1s;
         }
 
         /* Header et Navigation */
@@ -161,6 +254,7 @@
             display: flex;
             align-items: center;
             text-decoration: none;
+            z-index: 1001;
         }
 
         .logo-icon {
@@ -251,6 +345,7 @@
             cursor: pointer;
             font-size: 1.5rem;
             color: var(--primary);
+            z-index: 1001;
         }
 
         /* Section Hero */
@@ -948,49 +1043,83 @@
             text-decoration: underline;
         }
 
-        /* Menu Mobile */
+        /* Menu Mobile amélioré */
         .mobile-menu {
             position: fixed;
-            top: 80px;
+            top: 0;
             left: 0;
             width: 100%;
-            background: var(--dark-card);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            padding: 20px;
-            transform: translateY(-100%);
+            height: 100%;
+            background: rgba(26, 29, 40, 0.98);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             z-index: 999;
         }
 
         .mobile-menu.active {
-            transform: translateY(0);
+            transform: translateX(0);
             opacity: 1;
         }
 
         .mobile-links {
             list-style: none;
             text-align: center;
+            width: 100%;
         }
 
         .mobile-links li {
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .mobile-links a {
             text-decoration: none;
             color: var(--text);
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             display: block;
-            padding: 10px;
+            padding: 15px;
             transition: all 0.3s;
+            position: relative;
+        }
+
+        .mobile-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
         }
 
         .mobile-links a:hover {
             color: var(--primary);
-            background: rgba(58, 134, 255, 0.1);
-            border-radius: 5px;
+        }
+
+        .mobile-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-close:hover {
+            transform: rotate(90deg);
         }
 
         /* Responsive Design */
@@ -1028,6 +1157,10 @@
             .price {
                 font-size: 3rem;
             }
+
+            .bubble {
+                display: none;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1056,8 +1189,18 @@
     </style>
 </head>
 <body>
-    <!-- Fond animé -->
+    <!-- Fond animé amélioré -->
     <div class="animated-bg"></div>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
 
     <!-- Header -->
     <header id="header">
@@ -1084,8 +1227,11 @@
                 </div>
             </nav>
         </div>
-        <!-- Menu Mobile -->
+        <!-- Menu Mobile amélioré -->
         <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </div>
             <ul class="mobile-links">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#services">Services</a></li>
@@ -1401,12 +1547,38 @@
     </footer>
 
     <script>
-        // Menu mobile
-        document.getElementById('hamburger').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('active');
+        // Menu mobile amélioré
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileLinks = document.querySelectorAll('.mobile-links a');
+        
+        hamburger.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
-        // Animation au défilement
+        mobileClose.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        mobileLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fermer le menu mobile en cliquant en dehors
+        document.addEventListener('click', function(event) {
+            if (!mobileMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Animation au défilement améliorée
         document.addEventListener('DOMContentLoaded', function() {
             // Animation des éléments au défilement
             const observerOptions = {
@@ -1418,6 +1590,7 @@
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.style.animationPlayState = 'running';
+                        entry.target.style.opacity = '1';
                     }
                 });
             }, observerOptions);
@@ -1443,30 +1616,33 @@
                 }
             });
 
-            // Fermer le menu mobile en cliquant sur un lien
-            const mobileLinks = document.querySelectorAll('.mobile-links a');
-            mobileLinks.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    document.getElementById('mobileMenu').classList.remove('active');
-                });
-            });
-
-            // Fermer le menu mobile en cliquant en dehors
-            document.addEventListener('click', function(event) {
-                const mobileMenu = document.getElementById('mobileMenu');
-                const hamburger = document.getElementById('hamburger');
-                
-                if (!mobileMenu.contains(event.target) && !hamburger.contains(event.target)) {
-                    mobileMenu.classList.remove('active');
-                }
-            });
-
             // Formulaire de contact
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Merci pour votre message! Nous vous contacterons bientôt.');
                 this.reset();
             });
+
+            // Ajout de bulles supplémentaires dynamiquement
+            const bubblesContainer = document.querySelector('.bubbles');
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Position aléatoire
+                const left = Math.floor(Math.random() * 100);
+                const size = Math.floor(Math.random() * 60) + 20;
+                const duration = Math.floor(Math.random() * 20) + 10;
+                const delay = Math.floor(Math.random() * 5);
+                
+                bubble.style.left = `${left}%`;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${delay}s`;
+                
+                bubblesContainer.appendChild(bubble);
+            }
         });
     </script>
 </body>
