@@ -103,6 +103,11 @@
             100% { transform: translateY(-1000px) rotate(720deg); }
         }
 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .animate-fade {
             animation: fadeIn 1s ease-out forwards;
         }
@@ -257,17 +262,12 @@
             z-index: 1001;
         }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
+        .logo-img {
+            width: 60px;
+            height: 60px;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-right: 12px;
-            color: white;
-            font-size: 1.5rem;
+            object-fit: cover;
             box-shadow: 0 4px 10px rgba(44, 90, 160, 0.3);
         }
 
@@ -946,6 +946,37 @@
             resize: vertical;
         }
 
+        .form-status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-status.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #c8e6c9;
+        }
+
+        .form-status.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            color: #ffcdd2;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
         /* Footer */
         footer {
             background-color: var(--dark-card);
@@ -1207,9 +1238,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-spa"></i>
-                    </div>
+                    <img src="https://raw.githubusercontent.com/mulaflowragencies-debug/Maestro-speed/refs/heads/main/IMG-20251030-WA0003.jpg" alt="Maestro Speed Wash & Scavenger" class="logo-img">
                     <div class="logo-text">
                         Maestro Speed <span class="logo-subtext">Wash & Scavenger</span>
                     </div>
@@ -1474,18 +1503,21 @@
                 <div class="contact-form animate-right delay-2">
                     <form id="contactForm">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Votre nom" required>
+                            <input type="text" class="form-control" placeholder="Votre nom" required id="name">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Votre email" required>
+                            <input type="email" class="form-control" placeholder="Votre email" required id="email">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Sujet" required>
+                            <input type="text" class="form-control" placeholder="Sujet" required id="subject">
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" placeholder="Votre message" required></textarea>
+                            <textarea class="form-control" placeholder="Votre message" required id="message"></textarea>
                         </div>
-                        <button type="submit" class="btn">Envoyer le message</button>
+                        <button type="submit" class="btn" id="submitBtn">
+                            <span id="btnText">Envoyer le message</span>
+                        </button>
+                        <div class="form-status" id="formStatus"></div>
                     </form>
                 </div>
             </div>
@@ -1616,11 +1648,38 @@
                 }
             });
 
-            // Formulaire de contact
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Formulaire de contact avec effets de chargement
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const formStatus = document.getElementById('formStatus');
+
+            contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                alert('Merci pour votre message! Nous vous contacterons bientôt.');
-                this.reset();
+                
+                // Désactiver le bouton et afficher l'indicateur de chargement
+                submitBtn.disabled = true;
+                btnText.innerHTML = '<span class="loading"></span> Envoi en cours...';
+                
+                // Simuler l'envoi du formulaire
+                setTimeout(function() {
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Envoyer le message';
+                    
+                    // Afficher le message de succès
+                    formStatus.textContent = 'Merci pour votre message! Nous vous contacterons bientôt.';
+                    formStatus.className = 'form-status success';
+                    formStatus.style.display = 'block';
+                    
+                    // Réinitialiser le formulaire
+                    contactForm.reset();
+                    
+                    // Masquer le message après 5 secondes
+                    setTimeout(function() {
+                        formStatus.style.display = 'none';
+                    }, 5000);
+                }, 2000); // Simuler un délai de 2 secondes pour l'envoi
             });
 
             // Ajout de bulles supplémentaires dynamiquement
